@@ -1,9 +1,15 @@
-// Test script to list available Gemini models
-// Run with: node test-gemini.js
+// Run with: node --env-file=.env.local test-gemini.js
 
 const { GoogleGenerativeAI } = require('@google/generative-ai');
+// require('dotenv').config({ path: '.env.local' }); // Use native node --env-file instead
 
-const API_KEY = 'AIzaSyCv0ixbp8tkAq6vX8TcmSVhVSuMbIjoWlE';
+const API_KEY = process.env.GEMINI_API_KEY;
+
+if (!API_KEY) {
+    console.error('❌ Error: GEMINI_API_KEY is not set in .env.local');
+    process.exit(1);
+}
+
 const genAI = new GoogleGenerativeAI(API_KEY);
 
 async function listModels() {
