@@ -122,7 +122,26 @@ The simple yet powerful relational schema consists of:
     ```
     Access the app at `http://localhost:3000`.
 
-## 7. API Endpoints
+## 7. Challenges & Solutions
+
+### 1. The "Manual Entry" Fatigue 😫
+**Problem**: One of the biggest friction points in bookmark managers is the need to manually type out titles, descriptions, and tags. This process is tedious and often results in messy, unorganized lists.
+
+**Solution**: 
+We automated this entire workflow using **Google Gemini AI**.
+-   **Smart Fetching**: The system first scrapes the URL for Open Graph metadata.
+-   **AI Analysis**: If metadata is sparse, Gemini analyzes the page content to generate a concise, human-readable summary and auto-suggests relevant tags.
+-   **Result**: Users simply paste a link, and the card is populated instantly with rich, searchable details.
+
+### 2. Real-time Interaction
+**Problem**: Users expect instant feedback when adding or deleting items, without reloading the page.
+**Solution**: Leveraged **Supabase Realtime** to listen for database changes (inserts/deletes) and update the UI state immediately, creating a snappy, app-like experience.
+
+### 3. Efficient Search
+**Problem**: Simple `LIKE` queries in SQL are slow and inaccurate for large datasets.
+**Solution**: Implemented PostgreSQL's built-in **`tsvector`** for full-text search, allowing users to find bookmarks by matching keywords in the title, description, or URL domain.
+
+## 8. API Endpoints
 
 ### `POST /api/ai/generate-metadata`
 -   **Purpose**: Generates title, description, and tags for a given URL.
